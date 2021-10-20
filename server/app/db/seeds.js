@@ -1,11 +1,9 @@
 import once from "./conns/once.js";
 import productsData from "./data.js";
 
-once
-  .connect()
-  .then((connection) =>
-    connection.db("products").collection("products").insertMany(productsData)
-  )
-  .then(() => {
-    once.close();
-  });
+(async () => {
+  const conn = await once.connect();
+  await conn.db("products").collection("products").deleteMany({});
+  await conn.db("products").collection("products").insertMany(productsData);
+  conn.close();
+})();
