@@ -15,7 +15,11 @@ router.get("/", (_, res) => {
 
 // localhost:3000/products
 router.get("/products", async (_, res) => {
-  const products = await client.db(name).collection(collection).find({});
+  const products = await client
+    .db(name)
+    .collection(collection)
+    .find()
+    .toArray();
   res.json(products);
 });
 
