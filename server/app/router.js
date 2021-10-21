@@ -1,10 +1,11 @@
 import Router from "express";
+import { ObjectId } from "mongodb";
 import config from "./config.js";
 import client from "./db/conns/client.js";
 
-const {
-  db: { name, collectionName: collection },
-} = config;
+const collection = client
+  .db(config.db.name)
+  .collection(config.db.collectionName);
 
 const router = new Router();
 
@@ -15,15 +16,10 @@ router.get("/", (_, res) => {
 
 // localhost:3000/products
 router.get("/products", async (_, res) => {
-  const products = await client
-    .db(name)
-    .collection(collection)
-    .find()
-    .toArray();
+  const products = await collection.find().toArray();
   res.json(products);
 });
 
-// TODO: Get details for one specific product (by id)
 router.get("/products/:id", async (req, res) => {
   const product = await collection.findOne({ _id: ObjectId(req.params.id) });
   res.json(product);
