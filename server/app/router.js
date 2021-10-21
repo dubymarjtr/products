@@ -30,4 +30,11 @@ router.post("/products", async (req, res) => {
   res.json(createdProduct);
 });
 
+router.delete("/products", async (req, res) => {
+  const deletedProduct = await collection.deleteOne({
+    _id: ObjectId(req.body.id),
+  });
+  res.json(deletedProduct);
+});
+
 export default router;
