@@ -23,4 +23,10 @@ router.get("/products", async (_, res) => {
   res.json(products);
 });
 
+// TODO: Get details for one specific product (by id)
+router.get("/products/:id", async (req, res) => {
+  const product = await collection.findOne({ _id: ObjectId(req.params.id) });
+  res.json(product);
+});
+
 export default router;
