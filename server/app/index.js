@@ -10,9 +10,7 @@ app.get("/", (_, res) => {
   res.send("Hello World");
 });
 
-// TODO: Use json middleware (if needed)
-
-// TODO: Mount the routes (maybe 🤔 /api)
+app.use(express.json());
 app.use("/api", router);
 
 app.listen(config.port, () => {
