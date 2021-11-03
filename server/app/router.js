@@ -20,21 +20,37 @@ router.get("/products", async (_, res) => {
   res.json(products);
 });
 
+// get product by id (dynamic route)
 router.get("/products/:id", async (req, res) => {
   const product = await collection.findOne({ _id: ObjectId(req.params.id) });
   res.json(product);
 });
 
+// insert one product
 router.post("/products", async (req, res) => {
   const createdProduct = await collection.insertOne(req.body);
   res.json(createdProduct);
 });
 
+// delete one product
 router.delete("/products", async (req, res) => {
   const deletedProduct = await collection.deleteOne({
     _id: ObjectId(req.body.id),
   });
   res.json(deletedProduct);
 });
+
+// update one product
+router.put("/products", async (req, res) => {
+  const updatedProduct = await collection.updateOne(
+    { _id: ObjectId(req.body.id) }, 
+    { $set: req.body.payload });
+  res.json(updatedProduct);
+})
+
+
+
+
+
 
 export default router;
